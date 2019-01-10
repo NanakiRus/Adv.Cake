@@ -1,4 +1,5 @@
-Все задачи с использованиеь SQL тестировались на MariaDB 10.4
+<?php
+// Все задачи с использованиеь SQL тестировались на MariaDB 10.4
 // 1 Задача
 // Может ли когда-либо выполниться условие $x == 1 && $x == 2. Если может, то когда, если нет, то почему?
 $x = true;
@@ -16,14 +17,14 @@ function m_round(float $x)
 // 3 Задача
 // Вам досталась реляционная база данных со схемой, как на картинке. Вас попросили найти преподавателей, к которым хотя бы на один курс ходит мало студентов. Мало — меньше 50% от среднего размера курса. Напишите SQL, с помощью которого будете определять таких преподавателей. Укажите, какой диалект используете.
 
-SELECT *
+'SELECT *
 FROM (SELECT name, professor_id, courses_students.course_id, count(student_id) as count_students
       FROM professors
              LEFT JOIN professors_courses ON professors.id = professors_courses.professor_id
              LEFT JOIN courses_students ON professors_courses.course_id = courses_students.course_id
       GROUP BY professor_id, courses_students.course_id) students_summ
 where count_students < (SELECT avg(students_avg.c_s) / 2
-                        FROM (SELECT count(student_id) as c_s FROM courses_students group by course_id) students_avg)
+                        FROM (SELECT count(student_id) as c_s FROM courses_students group by course_id) students_avg)'
 #################################
 
 // 4 Задача
@@ -111,7 +112,7 @@ function getMaxUsersActivity($date) {
 // CR - отношение кол. ва заказов к количеству кликов
 // CTR - отношения кол-ва кликов к количеству показов
 
-SELECT project_id,
+'SELECT project_id,
        imps_count,
        clicks_count,
        orders_count,
@@ -132,4 +133,4 @@ FROM (SELECT uniq_id.project_id,
                                 click.time BETWEEN '2018-12-14 16:00:03' AND '2018-12-14 16:50:03'
              LEFT JOIN `order` ON `order`.project_id = uniq_id.project_id AND
                                   `order`.time BETWEEN '2018-12-14 16:00:03' AND '2018-12-14 16:50:03'
-      ORDER BY uniq_id.project_id) counts
+      ORDER BY uniq_id.project_id) counts'
